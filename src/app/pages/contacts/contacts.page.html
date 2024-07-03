@@ -11,17 +11,18 @@
     <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search" (ionInput)="filterContacts()"></ion-searchbar>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="sortContacts('name')">Sort by Name</ion-button>
-      <ion-button (click)="sortContacts('phone')">Sort by Phone</ion-button>
-      <ion-button (click)="sortContacts('email')">Sort by Email</ion-button>
-    </ion-buttons>
+    <ion-select placeholder="Sort by" (ionChange)="sortContacts($event.detail.value)">
+      <ion-select-option value="name">Name</ion-select-option>
+      <ion-select-option value="phone">Phone</ion-select-option>
+      <ion-select-option value="email">Email</ion-select-option>
+    </ion-select>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let contact of filteredContacts">
+      <ion-label>{{ contact.id }}</ion-label>
       <ion-label>{{ contact.name }}</ion-label>
       <ion-label>{{ contact.phone }}</ion-label>
       <ion-label>{{ contact.email }}</ion-label>

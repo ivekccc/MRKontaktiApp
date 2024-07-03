@@ -11,12 +11,9 @@ export interface Contact {
   providedIn: 'root'
 })
 export class ContactService {
-  private contacts: Contact[] = [{id:1,name:'John Doe',phone:'1234567890',email:'john.doe@example.com'}
-  ,{id:2,name:'Jane Smith',phone:'0987654321',email:'jane.smith@example.com'},
-  {id:3,name:'Alice Johnson',phone:'5551234567',email:'alice.johnson@example.com'},
-  {id:4,name:'Bob Brown',phone:'5559876543',email:'bob.brown@example.com'}
+  private contacts: Contact[] = [
   ];
-  private nextId = 2;
+  private nextId = 1;
 
   constructor() { }
 
