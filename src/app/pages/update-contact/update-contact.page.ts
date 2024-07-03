@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ContactService,Contact } from 'src/app/services/contact.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class UpdateContactPage implements OnInit {
     email: '',
     favorites: false
   };
-  constructor(private contactService: ContactService, private route: ActivatedRoute) { }
+  constructor(private router: Router,private contactService: ContactService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const id = Number(this.route.snapshot.params['id']);
@@ -31,6 +32,7 @@ export class UpdateContactPage implements OnInit {
   saveContact() {
     if (this.contact) {
       this.contactService.updateContact(this.contact);
+      this.router.navigate(['/contacts']);
     } else {
       console.error('Contact is undefined');
     }

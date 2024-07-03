@@ -22,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'update-contact/:id',
-    loadChildren: () => import('./update-contact/update-contact.module').then( m => m.UpdateContactPageModule),canActivate: [AuthGuard]
+    loadChildren: () => import('./pages/update-contact/update-contact.module').then( m => m.UpdateContactPageModule),canActivate: [AuthGuard]
   },
   {
     path: 'register',
