@@ -22,6 +22,14 @@ const routes: Routes = [
   {
     path: 'update-contact/:id',
     loadChildren: () => import('./update-contact/update-contact.module').then( m => m.UpdateContactPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   }
 ];
 
