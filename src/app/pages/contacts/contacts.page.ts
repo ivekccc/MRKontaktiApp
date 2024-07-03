@@ -9,6 +9,8 @@ import { Contact } from 'src/app/services/contact.service';
 })
 export class ContactsPage implements OnInit {
   contacts: Contact[] = [];
+  filteredContacts: Contact[] = [];
+  searchTerm: string = '';
 
 
   constructor(private contactService: ContactService ) { }
@@ -17,6 +19,21 @@ export class ContactsPage implements OnInit {
   }
   ionViewWillEnter() {
     this.contacts = this.contactService.getContacts();
+    this.filteredContacts = this.contacts;
+  }
+
+  filterContacts() {
+    this.filteredContacts = this.contacts.filter(contact => contact.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    || contact.phone.toLowerCase().includes(this.searchTerm.toLowerCase())
+    || contact.email.toLowerCase().includes(this.searchTerm.toLowerCase()));
+  }
+
+    sortContacts(criteria: keyof Contact) {
+    this.filteredContacts.sort((a, b) => {
+      if (a[criteria] < b[criteria]) return -1;
+      if (a[criteria] > b[criteria]) return 1;
+      return 0;
+    });
   }
 
 }
