@@ -14,8 +14,10 @@ export class ContactDetailPage implements OnInit {
   contact: Contact = {
     id: 0,
     name: '',
+    surname: '', // Dodato polje
     phone: '',
-    email: ''
+    email: '',
+    favorites: false // Dodato polje
   };
   contactId: number | undefined;
 

@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 export interface Contact {
   id: number;
   name: string;
+  surname: string;
   phone: string;
   email: string;
+  favorites: boolean;
 }
 
 @Injectable({

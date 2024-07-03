@@ -10,12 +10,20 @@
     <ion-input type="text" [(ngModel)]="contact.name"></ion-input>
   </ion-item>
   <ion-item>
+    <ion-label>Surname: </ion-label>
+    <ion-input type="text" [(ngModel)]="contact.surname"></ion-input>
+  </ion-item>
+  <ion-item>
     <ion-label>Phone: </ion-label>
     <ion-input type="text" [(ngModel)]="contact.phone"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>Email: </ion-label>
     <ion-input type="text" [(ngModel)]="contact.email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Favorites: </ion-label>
+    <ion-checkbox [(ngModel)]="contact.favorites"></ion-checkbox>
   </ion-item>
   <ion-button (click)="saveContact()">Save</ion-button>
   <ion-button *ngIf="contactId" expand="full" color="danger" (click)="deleteContact()">Delete</ion-button>

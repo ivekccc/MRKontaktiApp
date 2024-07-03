@@ -11,7 +11,20 @@ export class ContactsPage implements OnInit {
   contacts: Contact[] = [];
   filteredContacts: Contact[] = [];
   searchTerm: string = '';
+  selectedTab= 'all';
   showSortOptions = false;
+
+  toggleSortOptions() {
+    this.showSortOptions = !this.showSortOptions;
+  }
+
+  toggleTab(tab: 'all' | 'favorites') {
+    this.selectedTab = tab;
+  }
+
+  get favoriteContacts() {
+    return this.filteredContacts.filter(contact => contact.favorites);
+  }
 
   constructor(private contactService: ContactService ) { }
 
@@ -28,16 +41,12 @@ export class ContactsPage implements OnInit {
     || contact.email.toLowerCase().includes(this.searchTerm.toLowerCase()));
   }
 
-  sortContacts(value: string) {
-    const key = value as keyof Contact;
+    sortContacts(criteria: keyof Contact) {
     this.filteredContacts.sort((a, b) => {
-      if (a[key] < b[key]) return -1;
-      if (a[key] > b[key]) return 1;
+      if (a[criteria] < b[criteria]) return -1;
+      if (a[criteria] > b[criteria]) return 1;
       return 0;
     });
   }
 
-  toggleSortOptions() {
-    this.showSortOptions = !this.showSortOptions;
-  }
 }

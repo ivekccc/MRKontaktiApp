@@ -20,7 +20,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+
+  <ion-list *ngIf="selectedTab === 'all'">
     <ion-item *ngFor="let contact of filteredContacts">
       <ion-label>{{ contact.id }}</ion-label>
       <ion-label>{{ contact.name }}</ion-label>
@@ -28,4 +29,24 @@
       <ion-label>{{ contact.email }}</ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-list *ngIf="selectedTab === 'favorites'">
+    <ion-item *ngFor="let contact of favoriteContacts">
+      <ion-label>{{ contact.id }}</ion-label>
+      <ion-label>{{ contact.name }}</ion-label>
+      <ion-label>{{ contact.phone }}</ion-label>
+      <ion-label>{{ contact.email }}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-segment [(ngModel)]="selectedTab" class="segment-bottom">
+    <ion-segment-button value="all">
+      <ion-label>All</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="favorites">
+      <ion-label>Favorites</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-footer>
