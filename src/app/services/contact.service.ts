@@ -14,8 +14,48 @@ export interface Contact {
 })
 export class ContactService {
   private contacts: Contact[] = [
+  {
+    id: 1,
+    name: 'Marko',
+    surname: 'Markovic',
+    phone: '123-456-7890',
+    email: 'marko.markovic@example.com',
+    favorites: false
+  },
+  {
+    id: 2,
+    name: 'Jelena',
+    surname: 'Jovanovic',
+    phone: '234-567-8901',
+    email: 'jelena.jovanovic@example.com',
+    favorites: true
+  },
+  {
+    id: 3,
+    name: 'Nikola',
+    surname: 'Nikolic',
+    phone: '345-678-9012',
+    email: 'nikola.nikolic@example.com',
+    favorites: false
+  },
+  {
+    id: 4,
+    name: 'Ana',
+    surname: 'Anic',
+    phone: '456-789-0123',
+    email: 'ana.anic@example.com',
+    favorites: true
+  },
+  {
+    id: 5,
+    name: 'Petar',
+    surname: 'Petrovic',
+    phone: '567-890-1234',
+    email: 'petar.petrovic@example.com',
+    favorites: false
+  }
   ];
-  private nextId = 1;
+  private nextId = 6;
 
   constructor() { }
 
@@ -24,7 +64,8 @@ export class ContactService {
   }
 
   getContact(id: number): Contact | undefined {
-    return this.contacts.find(contact => contact.id === id);
+    const contact = this.contacts.find(contact => contact.id === id);
+    return contact;
   }
   addContact(contact: Contact): void {
     contact.id = this.nextId++;

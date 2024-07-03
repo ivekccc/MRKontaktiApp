@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from 'src/app/services/contact.service';
 import { Contact } from 'src/app/services/contact.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contacts',
@@ -14,8 +15,12 @@ export class ContactsPage implements OnInit {
   selectedTab= 'all';
   showSortOptions = false;
 
+
   toggleSortOptions() {
     this.showSortOptions = !this.showSortOptions;
+  }
+  openContact(contact: Contact) {
+    this.router.navigate(['/update-contact', contact.id]);
   }
 
   toggleTab(tab: 'all' | 'favorites') {
@@ -26,7 +31,7 @@ export class ContactsPage implements OnInit {
     return this.filteredContacts.filter(contact => contact.favorites);
   }
 
-  constructor(private contactService: ContactService ) { }
+  constructor(private contactService: ContactService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -49,4 +54,7 @@ export class ContactsPage implements OnInit {
     });
   }
 
+  openContactDetail(contact: Contact) {
+    this.router.navigate(['/update-contact', contact.id]);
+  }
 }

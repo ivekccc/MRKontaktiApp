@@ -22,7 +22,7 @@
 <ion-content>
 
   <ion-list *ngIf="selectedTab === 'all'">
-    <ion-item *ngFor="let contact of filteredContacts">
+    <ion-item *ngFor="let contact of filteredContacts" (click)="openContactDetail(contact)">
       <ion-label>{{ contact.id }}</ion-label>
       <ion-label>{{ contact.name }}</ion-label>
       <ion-label>{{ contact.phone }}</ion-label>
