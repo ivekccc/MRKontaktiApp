@@ -1,13 +1,22 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>contact-detail</ion-title>
+    <ion-title>{{contactId ? 'Edit Contact' : 'Add Contact'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">contact-detail</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label>{{ contact.name }}</ion-label>
+    <ion-input type="text" [(ngModel)]="contact.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>{{ contact.phone }}</ion-label>
+    <ion-input type="text" [(ngModel)]="contact.phone"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>{{ contact.email }}</ion-label>
+    <ion-input type="text" [(ngModel)]="contact.email"></ion-input>
+  </ion-item>
+  <ion-button (click)="saveContact()">Save</ion-button>
+  <ion-button *ngIf="contactId" expand="full" color="danger" (click)="deleteContact()">Delete</ion-button>
 </ion-content>

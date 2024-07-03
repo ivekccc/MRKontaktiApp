@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ContactService } from 'src/app/services/contact.service';
+import { Contact } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-contacts',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contacts.page.scss'],
 })
 export class ContactsPage implements OnInit {
+  contacts: Contact[] = [];
 
-  constructor() { }
+
+  constructor(private contactService: ContactService ) { }
 
   ngOnInit() {
+  }
+  ionViewWillEnter() {
+    this.contacts = this.contactService.getContacts();
   }
 
 }
