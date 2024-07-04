@@ -14,10 +14,11 @@ ion-content {
 
 .login-card {
   width: 100%;
-  max-width: 400px; // Ograničava maksimalnu širinu kartice
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Dodaje blagi senku za bolji izgled
-  border-radius: 10px; // Zaobljeni uglovi kartice
+    max-width: 400px; // Ograničava maksimalnu širinu kartice
+    padding: 20px;
+    margin-top: 15%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Dodaje blagi senku za bolji izgled
+    border-radius: 20px; // Zaobljeni uglovi kartice
 }
 
 ion-card-header {
@@ -29,7 +30,9 @@ ion-header{
 
 }
 
-
+ion-toolbar{
+  text-align: center;
+}
 
 ion-button {
   margin-top: 10px;

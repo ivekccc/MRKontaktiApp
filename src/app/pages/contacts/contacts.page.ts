@@ -3,6 +3,8 @@ import { ContactService } from 'src/app/services/contact.service';
 import { Contact } from 'src/app/services/contact.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { PopoverController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-contacts',
@@ -15,6 +17,7 @@ export class ContactsPage implements OnInit {
   searchTerm: string = '';
   selectedTab= 'all';
   showSortOptions = false;
+  selectedContact: Contact | null = null; // Added property
 
 
   toggleSortOptions() {
@@ -32,7 +35,7 @@ export class ContactsPage implements OnInit {
     return this.filteredContacts.filter(contact => contact.favorites);
   }
 
-  constructor(private authService: AuthService,private contactService: ContactService, private router: Router) { }
+  constructor(private authService: AuthService,private contactService: ContactService, private router: Router, private popoverController: PopoverController, private alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -62,4 +65,8 @@ export class ContactsPage implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+
+
+
 }

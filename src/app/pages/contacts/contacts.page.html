@@ -25,24 +25,19 @@
 <ion-content>
 
   <ion-list *ngIf="selectedTab === 'all'">
-    <ion-item *ngFor="let contact of filteredContacts" (click)="openContactDetail(contact)">
-      <ion-label>{{ contact.id }}</ion-label>
-      <ion-label>{{ contact.name }}</ion-label>
-      <ion-label>{{ contact.phone }}</ion-label>
-      <ion-label>{{ contact.email }}</ion-label>
+    <ion-item *ngFor="let contact of filteredContacts" >
+      <ion-label>{{ contact.name }} {{contact.surname}}</ion-label>
+      <ion-icon name="ellipsis-vertical-outline" (click)="openContactDetail(contact)"></ion-icon>
     </ion-item>
   </ion-list>
 
   <ion-list *ngIf="selectedTab === 'favorites'">
     <ion-item *ngFor="let contact of favoriteContacts">
-      <ion-label>{{ contact.id }}</ion-label>
-      <ion-label>{{ contact.name }}</ion-label>
-      <ion-label>{{ contact.phone }}</ion-label>
-      <ion-label>{{ contact.email }}</ion-label>
+      <ion-label>{{ contact.name }} {{contact.surname}}</ion-label>
+      <ion-icon name="ellipsis-vertical-outline" ></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>
-
 <ion-footer>
   <ion-segment [(ngModel)]="selectedTab" class="segment-bottom">
     <ion-segment-button value="all">

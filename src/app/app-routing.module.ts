@@ -10,19 +10,19 @@ const routes: Routes = [
   },
   {
     path: 'contacts',
-    loadChildren: () => import('./pages/contacts/contacts.module').then( m => m.ContactsPageModule),/*canActivate: [AuthGuard]*/
+    loadChildren: () => import('./pages/contacts/contacts.module').then( m => m.ContactsPageModule),canActivate: [AuthGuard]
   },
   {
     path: 'contact-detail',
-    loadChildren: () => import('./pages/contact-detail/contact-detail.module').then( m => m.ContactDetailPageModule),/*canActivate: [AuthGuard]*/
+    loadChildren: () => import('./pages/contact-detail/contact-detail.module').then( m => m.ContactDetailPageModule),canActivate: [AuthGuard]
   },
   {
     path: 'contact-detail/:id',
-      loadChildren: () => import('./pages/contact-detail/contact-detail.module').then( m => m.ContactDetailPageModule),/*canActivate: [AuthGuard]*/
+      loadChildren: () => import('./pages/contact-detail/contact-detail.module').then( m => m.ContactDetailPageModule),canActivate: [AuthGuard]
   },
   {
     path: 'update-contact/:id',
-    loadChildren: () => import('./pages/update-contact/update-contact.module').then( m => m.UpdateContactPageModule),/*canActivate: [AuthGuard]*/
+    loadChildren: () => import('./pages/update-contact/update-contact.module').then( m => m.UpdateContactPageModule),canActivate: [AuthGuard]
   },
   {
     path: 'register',
