@@ -27,7 +27,7 @@
   <ion-list *ngIf="selectedTab === 'all'">
     <ion-item *ngFor="let contact of filteredContacts" >
       <ion-label>{{ contact.name }} {{contact.surname}}</ion-label>
-      <ion-icon name="ellipsis-vertical-outline" (click)="openContactDetail(contact)"></ion-icon>
+      <ion-icon name="ellipsis-vertical-outline" (click)="presentPopover($event,contact)"></ion-icon>
     </ion-item>
   </ion-list>
 

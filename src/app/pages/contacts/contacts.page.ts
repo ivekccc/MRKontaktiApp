@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { PopoverController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { ContactPopoverComponent } from 'src/app/contact-popover/contact-popover.component';
 
 @Component({
   selector: 'app-contacts',
@@ -12,6 +13,11 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./contacts.page.scss'],
 })
 export class ContactsPage implements OnInit {
+
+  constructor(private authService: AuthService,private contactService: ContactService, private router: Router,
+    private popoverController: PopoverController,
+    private alertController: AlertController) { }
+
   contacts: Contact[] = [];
   filteredContacts: Contact[] = [];
   searchTerm: string = '';
@@ -35,7 +41,6 @@ export class ContactsPage implements OnInit {
     return this.filteredContacts.filter(contact => contact.favorites);
   }
 
-  constructor(private authService: AuthService,private contactService: ContactService, private router: Router, private popoverController: PopoverController, private alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -65,7 +70,28 @@ export class ContactsPage implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-
+async presentPopover(event: Event, contact: Contact) {
+  const popover = await this.popoverController.create({
+    component: ContactPopoverComponent,
+    componentProps: { contact },
+    event: event,
+    translucent: true,
+    showBackdrop: false
+  });
+  popover.onDidDismiss().then((data)=>{
+    if(data.data){
+      const{action}=data.data;
+      if(action=='edit'){
+       this.openContactDetail(contact);
+      }
+      if(action=='delete'){
+        this.contactService.deleteContact(contact.id);
+        this.contacts = this.contactService.getContacts();
+      }
+    }
+  });
+  return await popover.present();
+}
 
 
 
