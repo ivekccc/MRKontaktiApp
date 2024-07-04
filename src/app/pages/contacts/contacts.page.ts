@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PopoverController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { ContactPopoverComponent } from 'src/app/contact-popover/contact-popover.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
@@ -24,7 +25,7 @@ export class ContactsPage implements OnInit {
   selectedTab= 'all';
   showSortOptions = false;
   selectedContact: Contact | null = null; // Added property
-
+  private contactsSubscription: Subscription = new Subscription(); // Initialize the subscription
 
   toggleSortOptions() {
     this.showSortOptions = !this.showSortOptions;
@@ -43,11 +44,20 @@ export class ContactsPage implements OnInit {
 
 
   ngOnInit() {
+    this.contactsSubscription = this.contactService.getContacts().subscribe(contacts => {
+      this.contacts = contacts;
+      this.filteredContacts = this.contacts;
+    });
   }
-  ionViewWillEnter() {
-    this.contacts = this.contactService.getContacts();
-    this.filteredContacts = this.contacts;
+  ngOnDestroy() {
+    if (this.contactsSubscription) {
+      this.contactsSubscription.unsubscribe();
+    }
   }
+
+
+
+
 
   filterContacts() {
     this.filteredContacts = this.contacts.filter(contact => contact.name.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -86,7 +96,6 @@ async presentPopover(event: Event, contact: Contact) {
       }
       if(action=='delete'){
         this.contactService.deleteContact(contact.id);
-        this.contacts = this.contactService.getContacts();
       }
     }
   });

@@ -16,9 +16,9 @@ export class ContactPopoverComponent  implements OnInit {
   ngOnInit() {}
 
   editContact() {
-    this.popoverController.dismiss({ action: 'edit' });
+    this.popoverController.dismiss({ action: 'edit' ,contact:this.contact});
   }
   deleteContact() {
-    this.popoverController.dismiss({ action: 'delete' });
+    this.popoverController.dismiss({ action: 'delete',contact:this.contact });
   }
 }

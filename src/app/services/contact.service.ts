@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface Contact {
   id: number;
@@ -56,11 +57,12 @@ export class ContactService {
   }
   ];
   private nextId = 6;
+  private contactsSubject: BehaviorSubject<Contact[]> = new BehaviorSubject(this.contacts);
 
   constructor() { }
 
-  getContacts(): Contact[] {
-    return this.contacts;
+  getContacts(): Observable<Contact[]> {
+    return this.contactsSubject.asObservable();
   }
 
   getContact(id: number): Contact | undefined {
@@ -75,9 +77,12 @@ export class ContactService {
     const index = this.contacts.findIndex(c => c.id === contact.id);
     if (index !== -1) {
       this.contacts[index] = contact;
+      this.contactsSubject.next(this.contacts);
     }
   }
+
   deleteContact(id: number): void {
     this.contacts = this.contacts.filter(contact => contact.id !== id);
+    this.contactsSubject.next(this.contacts);
   }
 }
