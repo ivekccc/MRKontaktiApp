@@ -8,14 +8,16 @@
   <div class="register-card-container">
     <ion-card class="register-card">
       <ion-card-content>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
   <ion-item>
-    <ion-input label="Username" labelPlacement="floating" type="text" type="text" [(ngModel)]="username"></ion-input>
+    <ion-input label="Username" labelPlacement="floating" type="text" type="text" formControlName="username"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input label="Password" labelPlacement="floating" type="password" [(ngModel)]="password"></ion-input>
+    <ion-input label="Password" labelPlacement="floating" type="password" formControlName="password"></ion-input>
   </ion-item>
-  <ion-button color="success" shape="round" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto;" (click)="register()">Register</ion-button>
+  <ion-button type="submit" color="success" shape="round" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto;">Register</ion-button>
   <ion-button color="success" fill="clear" style="display: block; margin-left: auto; margin-right: auto;" (click)="goToLogin()">Login</ion-button>
+  </form>
 </ion-card-content>
 </ion-card>
 </div>
