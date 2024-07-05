@@ -12,10 +12,18 @@
           <ion-item>
             <ion-input formControlName="username" label="Username" labelPlacement="floating" type="text"></ion-input>
           </ion-item>
+          <ion-item lines="none" *ngIf="loginForm.get('username')?.errors?.['minlength']">
+            <ion-label color="danger">Username must be at least 3 characters long.</ion-label>
+          </ion-item>
           <ion-item>
             <ion-input formControlName="password" label="Password" labelPlacement="floating" type="password"></ion-input>
           </ion-item>
-          <ion-button type="submit" color="success" shape="round" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto;">Login</ion-button>
+          <ion-item lines="none" *ngIf="loginForm.get('password')?.errors?.['minlength']">
+            <ion-label color="danger">Password must be at least 6 characters long.</ion-label>
+          </ion-item>
+          <ion-button [disabled]="!loginForm.valid" type="submit" color="success" shape="round" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto;">
+            Login
+          </ion-button>
         </form>
         <ion-button color="success" fill="clear" style="display: block; margin-left: auto; margin-right: auto;" (click)="goToRegister()">Register</ion-button>
       </ion-card-content>

@@ -3,6 +3,8 @@ import {Router} from '@angular/router';
 
 export interface User {
   username: string;
+  name:string;
+  surname:string;
   password: string;
 }
 
@@ -11,8 +13,8 @@ export interface User {
 })
 export class AuthService {
   private users: User[] = [
-    {username: 'admin', password: 'admin'},
-    {username: 'user', password: 'user'},
+    {username: 'admin', name:'admin', surname:'admin', password: 'adminadmin'},
+    {username: 'user', name:'user', surname:'user', password: 'useruser'},
   ];
   private isAuthenticated = false;
 
@@ -31,12 +33,12 @@ export class AuthService {
     return false;
   }
 
-  register(username: string, password: string): boolean {
+  register(username: string, name: string, surname: string, password: string): boolean {
     const user = this.users.find(user => user.username === username);
     if (user) {
       return false;
     }
-    this.users.push({username, password});
+    this.users.push({username, name, surname, password});
     return true;
   }
 

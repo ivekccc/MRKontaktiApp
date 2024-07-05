@@ -9,13 +9,33 @@
     <ion-card class="register-card">
       <ion-card-content>
         <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+          <ion-item>
+             <ion-input label="Username" labelPlacement="floating" type="text" type="text" formControlName="username"></ion-input>
+        </ion-item>
+        <ion-item lines="none" *ngIf="registerForm.get('username')?.errors?.['minlength']">
+          <ion-label color="danger">Username must be at least 3 characters long.</ion-label>
+        </ion-item>
+
   <ion-item>
-    <ion-input label="Username" labelPlacement="floating" type="text" type="text" formControlName="username"></ion-input>
+    <ion-input label="Name" labelPlacement="floating" type="text" formControlName="name"></ion-input>
+  </ion-item>
+  <ion-item lines="none" *ngIf="registerForm.get('name')?.errors?.['pattern']">
+    <ion-label color="danger">Name must start with a capital letter.</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-input label="Surname" labelPlacement="floating" type="text" formControlName="surname"></ion-input>
+  </ion-item>
+  <ion-item lines="none" *ngIf="registerForm.get('surname')?.errors?.['pattern']">
+    <ion-label color="danger">Surname must start with a capital letter.</ion-label>
   </ion-item>
   <ion-item>
     <ion-input label="Password" labelPlacement="floating" type="password" formControlName="password"></ion-input>
   </ion-item>
-  <ion-button type="submit" color="success" shape="round" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto;">Register</ion-button>
+  <ion-item lines="none" *ngIf="registerForm.get('password')?.errors?.['minlength']">
+    <ion-label color="danger">Password must be at least 6 characters long.</ion-label>
+  </ion-item>
+  <ion-button [disabled]="!registerForm.valid" type="submit" color="success" shape="round" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto;">Register</ion-button>
   <ion-button color="success" fill="clear" style="display: block; margin-left: auto; margin-right: auto;" (click)="goToLogin()">Login</ion-button>
   </form>
 </ion-card-content>

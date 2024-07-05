@@ -10,8 +10,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup = this.fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required]
+    username: ['', [Validators.required, Validators.minLength(3)]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
   constructor(private authService: AuthService,
@@ -25,8 +25,10 @@ export class LoginPage implements OnInit {
       const { username, password } = this.loginForm.value;
       if (this.authService.login(username, password)) {
         this.router.navigate(['/contacts']);
+        this.loginForm.reset();
       } else {
         alert('Invalid username or password');
+        this.loginForm.reset();
       }
     }
   }
