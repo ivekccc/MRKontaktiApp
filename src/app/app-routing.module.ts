@@ -17,10 +17,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/contact-detail/contact-detail.module').then( m => m.ContactDetailPageModule),canActivate: [AuthGuard]
   },
   {
-    path: 'contact-detail/:id',
-      loadChildren: () => import('./pages/contact-detail/contact-detail.module').then( m => m.ContactDetailPageModule),canActivate: [AuthGuard]
-  },
-  {
     path: 'update-contact/:id',
     loadChildren: () => import('./pages/update-contact/update-contact.module').then( m => m.UpdateContactPageModule),canActivate: [AuthGuard]
   },

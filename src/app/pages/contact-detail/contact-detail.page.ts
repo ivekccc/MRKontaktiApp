@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactService } from 'src/app/services/contact.service';
 import { Contact } from 'src/app/services/contact.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 
@@ -19,36 +20,28 @@ export class ContactDetailPage implements OnInit {
     email: '',
     favorites: false
   };
-  contactId: number | undefined;
 
-  constructor(private contactService: ContactService, private route: ActivatedRoute, private router: Router) { }
+
+  contactForm: FormGroup= this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    surname: ['', [Validators.required, Validators.minLength(3)]],
+    phone: ['', [Validators.required, Validators.minLength(10)]],
+    email: ['', [Validators.required, Validators.email]],
+    favorites: [false]
+  });;
+
+  constructor(private contactService: ContactService, private route: ActivatedRoute, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.contactId = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.contactId) {
-      const contact = this.contactService.getContact(this.contactId);
-      if (contact) {
-        this.contact = contact;
-      } else {
-        this.router.navigate(['/contacts']);
-      }
-    }
+
   }
   saveContact() {
-    if (this.contactId) {
-      this.contactService.updateContact(this.contact);
-    } else {
-      this.contactService.addContact(this.contact);
-    }
-    this.router.navigate(['/contacts']);
+      if(this.contactForm.valid){
+        const{name, surname, phone, email, favorites} = this.contactForm.value;
+        const contact: Contact = {id: 0, name, surname, phone, email, favorites};
+        this.contactService.addContact(contact);
+        this.router.navigate(['/contacts']);
+      }
   }
-
-  deleteContact() {
-    if (this.contactId) {
-      this.contactService.deleteContact(this.contactId);
-    }
-    this.router.navigate(['/contacts']);
-  }
-
 
 }

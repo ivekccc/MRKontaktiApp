@@ -3,31 +3,39 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{contactId ? 'Edit Contact' : 'Add Contact'}}</ion-title>
+    <ion-title>Add Contact</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
   <ion-item>
-    <ion-label>Name: </ion-label>
-    <ion-input type="text" [(ngModel)]="contact.name"></ion-input>
+    <ion-input formControlName="name" label="Name" labelPlacement="floating" type="text"></ion-input>
+  </ion-item>
+  <ion-item lines="none" *ngIf="contactForm.get('name')?.errors?.['minlength']">
+    <ion-label color="danger">Name must be at least 3 characters long.</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label>Surname: </ion-label>
-    <ion-input type="text" [(ngModel)]="contact.surname"></ion-input>
+    <ion-input formControlName="surname" label="Surname" labelPlacement="floating" type="text"></ion-input>
+  </ion-item>
+  <ion-item lines="none" *ngIf="contactForm.get('surname')?.errors?.['minlength']">
+    <ion-label color="danger">Surname must be at least 3 characters long.</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label>Phone: </ion-label>
-    <ion-input type="text" [(ngModel)]="contact.phone"></ion-input>
+    <ion-input formControlName="phone" label="Phone" labelPlacement="floating" type="text"></ion-input>
+  </ion-item>
+  <ion-item lines="none" *ngIf="contactForm.get('phone')?.errors?.['minlength']">
+    <ion-label color="danger">Phone must be at least 10 characters long.</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label>Email: </ion-label>
-    <ion-input type="text" [(ngModel)]="contact.email"></ion-input>
+    <ion-input formControlName="email" label="Email" labelPlacement="floating" type="text"></ion-input>
+  </ion-item>
+  <ion-item lines="none" *ngIf="contactForm.get('email')?.errors?.['email']">
+    <ion-label color="danger">Email is not valid.</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label>Favorites: </ion-label>
-    <ion-checkbox [(ngModel)]="contact.favorites"></ion-checkbox>
+    <ion-checkbox  justify="space-between" labelPlacement="start" formControlName="favorites">Favorites</ion-checkbox>
   </ion-item>
-  <ion-button (click)="saveContact()">Save</ion-button>
-  <ion-button *ngIf="contactId" expand="full" color="danger" (click)="deleteContact()">Delete</ion-button>
+  <ion-button expand="full" type="submit">Save</ion-button>
+  </form>
 </ion-content>
