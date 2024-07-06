@@ -5,7 +5,6 @@ import { ContactPopoverComponent } from './contact-popover/contact-popover.compo
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
