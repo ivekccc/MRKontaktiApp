@@ -13,7 +13,7 @@
     <ion-input formControlName="name" label="Name" labelPlacement="floating" type="text"></ion-input>
   </ion-item>
   <ion-item lines="none" *ngIf="contactForm.get('name')?.errors?.['minlength']">
-    <ion-label color="danger">Name must be at least 3 characters long.</ion-label>
+    <ion-label color="danger">Name must be at least three characters long.</ion-label>
   </ion-item>
   <ion-item>
     <ion-input formControlName="surname" label="Surname" labelPlacement="floating" type="text"></ion-input>

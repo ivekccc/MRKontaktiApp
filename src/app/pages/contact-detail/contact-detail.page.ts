@@ -39,7 +39,7 @@ export class ContactDetailPage implements OnInit {
       if(this.contactForm.valid){
         const{name, surname, phone, email, favorites} = this.contactForm.value;
         const contact: Contact = {id: 0, name, surname, phone, email, favorites};
-        this.contactService.addContact(contact);
+        this.contactService.addContactFirebase(contact);
         this.router.navigate(['/contacts']);
       }
   }
