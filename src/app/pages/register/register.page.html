@@ -11,10 +11,10 @@
         <form [formGroup]="registerForm" (ngSubmit)="register()">
 
           <ion-item>
-             <ion-input label="Username" labelPlacement="floating" type="text" type="text" formControlName="username"></ion-input>
+             <ion-input label="Email" labelPlacement="floating" type="text" type="text" formControlName="email"></ion-input>
         </ion-item>
-        <ion-item lines="none" *ngIf="registerForm.get('username')?.errors?.['minlength']">
-          <ion-label color="danger">Username must be at least 3 characters long.</ion-label>
+        <ion-item lines="none" *ngIf="registerForm.get('email')?.errors?.['email']">
+          <ion-label color="danger">Invalid email address.</ion-label>
         </ion-item>
 
   <ion-item>

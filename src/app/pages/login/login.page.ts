@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class LoginPage implements OnInit {
   loginForm: FormGroup = this.fb.group({
-    username: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
@@ -20,10 +20,10 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  login() {
+  async login() {
     if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      if (this.authService.login(username, password)) {
+      const { email, password } = this.loginForm.value;
+      if (await this.authService.login(email, password)) {
         this.router.navigate(['/contacts']);
         this.loginForm.reset();
       } else {

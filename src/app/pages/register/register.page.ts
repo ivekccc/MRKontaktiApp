@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class RegisterPage implements OnInit {
   registerForm: FormGroup = this.fb.group({
-    username: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
     name: ['', [Validators.required, Validators.pattern('^[A-Z][a-zA-Z]*$')]],
     surname: ['', [Validators.required, Validators.pattern('^[A-Z][a-zA-Z]*$')]],
     password: ['', [Validators.required, Validators.minLength(6)]]
@@ -21,15 +21,14 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
-  register() {
+  async register() {
     if (this.registerForm.valid) {
-      const { username, name, surname, password } = this.registerForm.value;
-      if (this.authService.register(username, name, surname, password)) {
+      const { email, name, surname, password } = this.registerForm.value;
+      if (await this.authService.register(email, name, surname, password)) {
         this.router.navigate(['/login']);
         this.registerForm.reset();
       } else {
-        alert('Username already exists');
-        this.registerForm.reset();
+        alert('Registration failed');
       }
     }
   }

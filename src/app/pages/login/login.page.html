@@ -10,10 +10,10 @@
       <ion-card-content>
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <ion-item>
-            <ion-input formControlName="username" label="Username" labelPlacement="floating" type="text"></ion-input>
+            <ion-input formControlName="email" label="Email" labelPlacement="floating" type="text"></ion-input>
           </ion-item>
-          <ion-item lines="none" *ngIf="loginForm.get('username')?.errors?.['minlength']">
-            <ion-label color="danger">Username must be at least 3 characters long.</ion-label>
+          <ion-item lines="none" *ngIf="loginForm.get('email')?.errors?.['email']">
+            <ion-label color="danger">Invalid email address.</ion-label>
           </ion-item>
           <ion-item>
             <ion-input formControlName="password" label="Password" labelPlacement="floating" type="password"></ion-input>

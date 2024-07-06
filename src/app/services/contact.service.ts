@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Database, ref, set, onValue, remove, push, query, orderByChild, equalTo, get } from '@angular/fire/database';
 import { from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { switchMap } from 'rxjs';
 
 export interface Contact {
   id: number;
