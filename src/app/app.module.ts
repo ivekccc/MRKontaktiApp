@@ -13,6 +13,7 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
+import {HttpClient} from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, ContactPopoverComponent],
@@ -21,7 +22,8 @@ import { AngularFireModule } from '@angular/fire/compat';
     AngularFireModule.initializeApp(environment.firebase)],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AlertController,provideHttpClient()
     ,provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideDatabase(() => getDatabase())
+    provideDatabase(() => getDatabase()),
+    HttpClient
   ],
   bootstrap: [AppComponent],
 })

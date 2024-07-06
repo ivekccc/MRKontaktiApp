@@ -20,17 +20,12 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  async login() {
-    if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      if (await this.authService.login(email, password)) {
-        this.router.navigate(['/contacts']);
-        this.loginForm.reset();
-      } else {
-        alert('Invalid username or password');
-        this.loginForm.reset();
-      }
-    }
+  login(){
+    this.authService.login(this.loginForm.value).subscribe((data)=>{
+      console.log("Login uspešan");
+      localStorage.setItem('token',data.idToken);
+      this.router.navigate(['/contacts']);
+    })
   }
 
   goToRegister() {

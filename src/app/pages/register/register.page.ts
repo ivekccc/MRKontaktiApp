@@ -21,17 +21,12 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
-  async register() {
-    if (this.registerForm.valid) {
-      const { email, name, surname, password } = this.registerForm.value;
-      if (await this.authService.register(email, name, surname, password)) {
-        this.router.navigate(['/login']);
-        this.registerForm.reset();
-      } else {
-        alert('Registration failed');
-      }
-    }
-  }
+register(){
+  this.authService.register(this.registerForm.value).subscribe((data)=>{
+    console.log("Registracija uspešna");
+  })
+  this.router.navigate(['/login']);
+}
 
   goToLogin() {
     this.router.navigate(['/login']);

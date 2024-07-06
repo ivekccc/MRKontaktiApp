@@ -1,49 +1,59 @@
 import { Injectable } from '@angular/core';
-import {Router} from '@angular/router';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app'; // Izmenjeno
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
+
+interface AuthResponse {
+  kind: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered: boolean;
+}
+
+interface UserData{
+  email: string;
+  name: string;
+  surname: string;
+  password: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user$: Observable<firebase.User | null> = this.afAuth.user; // Izmenjeno
   private isAuthenticated = false;
 
-  constructor(private router: Router, private afAuth: AngularFireAuth) {
+  constructor(private router: Router, private http: HttpClient) {
     const isAuthenticated = localStorage.getItem('isAuthenticated');
     this.isAuthenticated = isAuthenticated === 'true';
   }
 
-  async login(email: string, password: string): Promise<boolean> {
-    try {
-      await this.afAuth.signInWithEmailAndPassword(email, password);
-      localStorage.setItem('isAuthenticated', 'true');
-      return true;
-    } catch (error) {
-      console.error('Login error', error);
-      return false;
-    }
+  login(userData: UserData){
+    return this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebase.apiKey}`,
+      {email:userData.email, password:userData.password,returnSecureToken:true}
+    );
   }
 
-  async register(email: string, name: string, surname: string, password: string): Promise<boolean> {
-    try {
-      await this.afAuth.createUserWithEmailAndPassword(email, password);
-      // Možete dodati dodatne informacije o korisniku u Firestore ako je potrebno
-      return true;
-    } catch (error) {
-      console.error('Registration error', error);
-      return false;
-    }
+  register(userData: UserData){
+    return this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebase.apiKey}`,
+      {email:userData.email, password:userData.password,returnSecureToken:true}
+    );
   }
 
   async logout(): Promise<void> {
-    await this.afAuth.signOut();
-    localStorage.removeItem('isAuthenticated');
-    this.router.navigate(['/login']);
+    try {
+      await this.http.post<AuthResponse>('/api/logout', {}).toPromise();
+      localStorage.removeItem('isAuthenticated');
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Logout error', error);
+    }
   }
 
   get isLoggedIn(): boolean {
