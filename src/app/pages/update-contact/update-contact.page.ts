@@ -31,7 +31,7 @@ export class UpdateContactPage implements OnInit {
 
   saveContact() {
     if (this.contact) {
-      this.contactService.updateContact(this.contact);
+      this.contactService.updateContactFirebase(this.contact);
       this.router.navigate(['/contacts']);
     } else {
       console.error('Contact is undefined');

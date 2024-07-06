@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Database, ref, set, onValue, remove, push } from '@angular/fire/database';
+import { Database, ref, set, onValue, remove, push, query, orderByChild, equalTo, get } from '@angular/fire/database';
 import { from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -44,28 +44,41 @@ export class ContactService {
     const contact = this.contacts.find(contact => contact.id === id);
     return contact;
   }
-  addContact(contact: Contact): void {
-    contact.id = this.nextId++;
-    this.contacts.push(contact);
-  }
+
   addContactFirebase(contact: Contact): Observable<void> {
     const newContactRef = push(this.contactsRef);
     contact.id=this.contacts.length+1;
-    this.contacts.push(contact);
     return from(set(newContactRef, contact));
 
   }
 
-  updateContact(contact: Contact): void {
-    const index = this.contacts.findIndex(c => c.id === contact.id);
-    if (index !== -1) {
-      this.contacts[index] = contact;
-      this.contactsSubject.next(this.contacts);
+  private async getFirebaseIdByContactId(contactId: number): Promise<string | null> {
+    const contactsQuery = query(this.contactsRef, orderByChild('id'), equalTo(contactId));
+    const snapshot = await get(contactsQuery);
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      const keys = Object.keys(data);
+      return keys.length > 0 ? keys[0] : null;
+    }
+    return null;
+  }
+
+  async updateContactFirebase(contact: Contact): Promise<void> {
+    const firebaseId = await this.getFirebaseIdByContactId(contact.id);
+    if (firebaseId) {
+      const contactRef = ref(this.db, `contacts/${firebaseId}`);
+      await set(contactRef, contact);
+    } else {
+      throw new Error('Contact not found in Firebase');
     }
   }
 
-  deleteContact(id: number): void {
-    this.contacts = this.contacts.filter(contact => contact.id !== id);
-    this.contactsSubject.next(this.contacts);
+
+  async deleteContactFirebase(id: number): Promise<void> {
+    const firebaseId = await this.getFirebaseIdByContactId(id);
+    if (firebaseId) {
+      const contactRef = ref(this.db, `contacts/${firebaseId}`);
+      await remove(contactRef);
+    }
   }
 }

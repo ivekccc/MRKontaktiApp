@@ -95,7 +95,7 @@ async presentPopover(event: Event, contact: Contact) {
        this.openContactDetail(contact);
       }
       if(action=='delete'){
-        this.contactService.deleteContact(contact.id);
+        this.contactService.deleteContactFirebase(contact.id);
       }
     }
   });
