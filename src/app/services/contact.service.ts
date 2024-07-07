@@ -107,12 +107,14 @@ export class ContactService {
           })
         );
       })
-    ).subscribe((newContact) => {
-      console.log('Contact added:', newContact);
-      this.contacts.push(newContact);
-      this.contactsSubject.next(this.contacts);
-    }, (error) => {
-      console.error('Failed to add contact:', error);
+    ).subscribe({
+      next: (newContact) => {
+        console.log('Contact added:', newContact);
+        this.contacts.push(newContact);
+      },
+      error: (error) => {
+        console.error('Failed to add contact:', error);
+      }
     });
   }
 
@@ -130,7 +132,7 @@ export class ContactService {
   async updateContactFirebase(contact: Contact): Promise<void> {
     const firebaseId = await this.getFirebaseIdByContactId(contact.id);
     if (firebaseId) {
-      const token = await this.authService.token.pipe(take(1)).toPromise();
+      const token = await lastValueFrom(this.authService.token.pipe(take(1)));
       const url = `https://mrkontakti-default-rtdb.europe-west1.firebasedatabase.app/contacts/${firebaseId}.json?auth=${token}`;
       await lastValueFrom(this.http.put(url, contact));
       console.log(`Contact with id ${contact.id} updated successfully`);
@@ -147,7 +149,7 @@ export class ContactService {
   async deleteContactFirebase(id: string): Promise<void> {
     const firebaseId = await this.getFirebaseIdByContactId(id);
     if (firebaseId) {
-      const token = await this.authService.token.pipe(take(1)).toPromise();
+      const token = await lastValueFrom(this.authService.token.pipe(take(1)));
       const url = `https://mrkontakti-default-rtdb.europe-west1.firebasedatabase.app/contacts/${firebaseId}.json?auth=${token}`;
       this.http.delete(url).subscribe(() => {
         console.log(`Contact with id ${id} deleted successfully`);
