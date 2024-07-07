@@ -51,6 +51,17 @@ export class AuthService {
   );
   }
 
+  get userId(){
+    return this._user.asObservable().pipe(
+      map((user)=>{
+        if(user){
+          return user.id;
+        }
+        return null;
+      })
+    );
+  }
+
   public getAuthStatus(){
     return this._user.asObservable().pipe(
       map((user)=>{

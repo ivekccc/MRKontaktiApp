@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { ContactService,Contact } from 'src/app/services/contact.service';
+import { Contact } from 'src/app/contact.model';
 import { AlertController } from '@ionic/angular';
 
 @Component({

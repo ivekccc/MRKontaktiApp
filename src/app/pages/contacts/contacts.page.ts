@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactService } from 'src/app/services/contact.service';
-import { Contact } from 'src/app/services/contact.service';
+import { Contact } from 'src/app/contact.model';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { PopoverController } from '@ionic/angular';

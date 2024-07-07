@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { ContactService,Contact } from 'src/app/services/contact.service';
+import { ContactService } from 'src/app/services/contact.service';
+import { Contact } from 'src/app/contact.model';
 
 @Component({
   selector: 'app-update-contact',
