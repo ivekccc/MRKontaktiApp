@@ -21,7 +21,11 @@
           <ion-item lines="none" *ngIf="loginForm.get('password')?.errors?.['minlength']">
             <ion-label color="danger">Password must be at least 6 characters long.</ion-label>
           </ion-item>
-          <ion-button [disabled]="!loginForm.valid" type="submit" color="success" shape="round" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto;">
+          <div class="ion-text-center" *ngIf="isLoading">
+            <ion-spinner color="primary" *ngIf="isLoading"></ion-spinner>
+          </div>
+          <ion-button *ngIf="!isLoading"
+           [disabled]="!loginForm.valid || isLoading" type="submit" color="success" shape="round" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto;">
             Login
           </ion-button>
         </form>

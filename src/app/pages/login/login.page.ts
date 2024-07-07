@@ -13,6 +13,7 @@ export class LoginPage implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
+  isLoading: boolean = false;
 
   constructor(private authService: AuthService,
      private router: Router, private fb: FormBuilder) { }
@@ -21,11 +22,18 @@ export class LoginPage implements OnInit {
   }
 
   login(){
-    this.authService.login(this.loginForm.value).subscribe((data)=>{
-      console.log("Login uspešan");
-      localStorage.setItem('token',data.idToken);
-      this.router.navigate(['/contacts']);
-    })
+    this.isLoading = true;
+    if(this.loginForm.valid){
+      this.authService.login(this.loginForm.value).subscribe((data)=>{
+        console.log("Login uspešan");
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('token',data.idToken);
+        this.isLoading = false;
+        this.router.navigate(['/contacts']);
+      })
+
+    }
+
   }
 
   goToRegister() {

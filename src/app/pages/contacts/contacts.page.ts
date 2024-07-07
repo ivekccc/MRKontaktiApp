@@ -78,6 +78,9 @@ export class ContactsPage implements OnInit {
   }
   logout() {
     this.authService.logout();
+    /*Privremeno resenje za testiranje logout funkcionalnosti*/
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 async presentPopover(event: Event, contact: Contact) {
