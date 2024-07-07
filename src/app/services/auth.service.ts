@@ -62,6 +62,19 @@ export class AuthService {
     );
   }
 
+  get token(){
+    return this._user.asObservable().pipe(
+      map((user)=>{
+        if(user){
+          return user.getToken();
+        }
+        return null;
+      })
+    );
+  }
+
+
+
   public getAuthStatus(){
     return this._user.asObservable().pipe(
       map((user)=>{
