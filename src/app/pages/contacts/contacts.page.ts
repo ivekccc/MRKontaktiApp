@@ -8,6 +8,7 @@ import { AlertController } from '@ionic/angular';
 import { ContactPopoverComponent } from 'src/app/contact-popover/contact-popover.component';
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.page.html',
@@ -44,20 +45,18 @@ export class ContactsPage implements OnInit {
 
 
   ngOnInit() {
+    this.contactService.loadContactsFromFirebase(); // Added from duplicate ngOnInit method
     this.contactsSubscription = this.contactService.getContacts().subscribe(contacts => {
       this.contacts = contacts;
       this.filteredContacts = this.contacts;
     });
+
   }
   ngOnDestroy() {
     if (this.contactsSubscription) {
       this.contactsSubscription.unsubscribe();
     }
   }
-
-
-
-
 
   filterContacts() {
     this.filteredContacts = this.contacts.filter(contact => contact.name.toLowerCase().includes(this.searchTerm.toLowerCase())

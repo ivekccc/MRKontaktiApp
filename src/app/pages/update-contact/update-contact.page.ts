@@ -11,17 +11,18 @@ import { Contact } from 'src/app/contact.model';
 })
 export class UpdateContactPage implements OnInit {
   contact: Contact = {
-    id: 0,
+    id: '',
     name: '',
     surname: '',
     phone: '',
     email: '',
-    favorites: false
+    favorites: false,
+    userId: ''
   };
   constructor(private router: Router,private contactService: ContactService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.params['id']);
+    const id = this.route.snapshot.params['id'];
     const contact = this.contactService.getContact(id);
     if (contact) {
       this.contact = contact;

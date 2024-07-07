@@ -13,12 +13,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ContactDetailPage implements OnInit {
   contact: Contact = {
-    id: 0,
+    id: '',
     name: '',
     surname: '',
     phone: '',
     email: '',
-    favorites: false
+    favorites: false,
+    userId: ''
   };
 
 
@@ -38,7 +39,7 @@ export class ContactDetailPage implements OnInit {
   saveContact() {
       if(this.contactForm.valid){
         const{name, surname, phone, email, favorites} = this.contactForm.value;
-        const contact: Contact = {id: 0, name, surname, phone, email, favorites};
+        const contact: Contact = {id: '', name, surname, phone, email, favorites, userId: ''};
         this.contactService.addContactFirebase(contact);
         this.router.navigate(['/contacts']);
       }
