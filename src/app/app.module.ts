@@ -23,7 +23,7 @@ import {HttpClient} from '@angular/common/http';
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AlertController,provideHttpClient()
     ,provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),
-    HttpClient
+    HttpClient,AlertController
   ],
   bootstrap: [AppComponent],
 })
