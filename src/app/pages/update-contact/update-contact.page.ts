@@ -19,6 +19,11 @@ export class UpdateContactPage implements OnInit {
     favorites: false,
     userId: ''
   };
+  disabled: boolean = true;
+
+  changeDisabled(){
+    this.disabled = !this.disabled;
+  }
   constructor(private router: Router,private contactService: ContactService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -39,5 +44,26 @@ export class UpdateContactPage implements OnInit {
       console.error('Contact is undefined');
     }
   }
+  cancelAdd(){
+
+    this.router.navigate(['/contacts']);
+  }
+
+  public alertButtons = [
+    {
+      text: "Keep",
+      role: 'cancel',
+      handler: () => {
+
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+        this.cancelAdd();
+      },
+    },
+  ];
 
 }

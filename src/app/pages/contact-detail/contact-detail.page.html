@@ -40,7 +40,7 @@
     <ion-checkbox color="success"  justify="space-between" labelPlacement="start" formControlName="favorites">Favorites</ion-checkbox>
   </ion-item>
   <ion-buttons class="contact-buttons" slot="end">
-    <ion-button slot="start" fill="solid" color="danger" shape="round" (click)="cancelAdd()">Cancel</ion-button>
+    <ion-button slot="start" fill="solid" color="danger" shape="round" id="present-alert">Cancel</ion-button>
     <ion-button slot="end" fill="solid" color="success" shape="round" type="submit">Save</ion-button>
   </ion-buttons>
 
@@ -48,4 +48,9 @@
 </ion-card-content>
 </ion-card>
 </div>
+<ion-alert
+  trigger="present-alert"
+  header="Cancel adding contact?"
+  [buttons]="alertButtons"
+></ion-alert>
 </ion-content>

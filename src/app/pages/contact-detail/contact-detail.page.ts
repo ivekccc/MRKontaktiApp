@@ -22,6 +22,23 @@ export class ContactDetailPage implements OnInit {
     userId: ''
   };
 
+  public alertButtons = [
+    {
+      text: "Keep",
+      role: 'cancel',
+      handler: () => {
+
+      },
+    },
+    {
+      text: "Cancel",
+      role: 'confirm',
+      handler: () => {
+        this.cancelAdd();
+      },
+    },
+  ];
+
   cancelAdd(){
     this.contactForm.reset();
     this.router.navigate(['/contacts']);

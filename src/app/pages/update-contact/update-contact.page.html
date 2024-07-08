@@ -4,21 +4,43 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Contact Detail</ion-title>
+    <ion-icon name="create-outline" (click)="changeDisabled()" slot="end" class="edit-icon"></ion-icon>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+  <div class="contact-card-container">
+    <ion-card class="contact-card">
+      <ion-card-content>
   <ion-item>
     <ion-label position="floating">Name</ion-label>
-    <ion-input [(ngModel)]="contact.name"></ion-input>
+    <ion-input [(ngModel)]="contact.name" [disabled]="disabled"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Surname</ion-label>
+    <ion-input [(ngModel)]="contact.surname" [disabled]="disabled"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="floating">Phone</ion-label>
-    <ion-input [(ngModel)]="contact.phone"></ion-input>
+    <ion-input [(ngModel)]="contact.phone" [disabled]="disabled"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="floating">Email</ion-label>
-    <ion-input [(ngModel)]="contact.email"></ion-input>
+    <ion-input [(ngModel)]="contact.email" [disabled]="disabled"></ion-input>
   </ion-item>
-  <ion-button expand="full" (click)="saveContact()">Save</ion-button>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="contact.favorites" color="success"  justify="space-between" labelPlacement="start" [disabled]="disabled">Favorites</ion-checkbox>
+  </ion-item>
+  <ion-buttons class="contact-buttons" slot="end">
+    <ion-button slot="start" fill="solid" color="danger" shape="round" id="present-alert">Cancel</ion-button>
+    <ion-button slot="end" fill="solid" color="success" shape="round" (click)="saveContact()">Save</ion-button>
+  </ion-buttons>
+
+  <ion-alert
+  trigger="present-alert"
+  header="Cancel changes?"
+  [buttons]="alertButtons"
+></ion-alert>
+</ion-card-content>
+</ion-card>
+</div>
 </ion-content>
