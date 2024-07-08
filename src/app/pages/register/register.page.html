@@ -30,10 +30,12 @@
     <ion-label color="danger">Surname must start with a capital letter.</ion-label>
   </ion-item>
   <ion-item>
-    <ion-input label="Password" labelPlacement="floating" type="password" formControlName="password"></ion-input>
+    <ion-input label="Password" labelPlacement="floating" type="password" formControlName="password">
+      <ion-input-password-toggle slot="end" color="success"></ion-input-password-toggle>
+    </ion-input>
   </ion-item>
-  <ion-item lines="none" *ngIf="registerForm.get('password')?.errors?.['minlength']">
-    <ion-label color="danger">Password must be at least 6 characters long.</ion-label>
+  <ion-item lines="none" *ngIf="registerForm.get('password')?.errors?.['pattern']">
+    <ion-label color="danger">{{ getPasswordErrorMessage() }}</ion-label>
   </ion-item>
   <ion-button [disabled]="!registerForm.valid" type="submit" color="success" shape="round" style="margin-top: 10px; display: block; margin-left: auto; margin-right: auto;">Register</ion-button>
   <ion-button color="success" fill="clear" style="display: block; margin-left: auto; margin-right: auto;" (click)="goToLogin()">Login</ion-button>
