@@ -1,0 +1,130 @@
+ANGULAR-IONIC PROJEKAT "KONTAKTI"
+
+OPSTE
+
+Ovo je aplikacija koja omogućuje kreiranje, pregled, izmena i brisanje kontakata.
+Tehnologija koja se koristi u aplikaciji je Angular i Ionic.
+Kao tehnologiju za bazu podataka koristi Firebase.
+
+U aplikaciji je najpre omoguceno registrovanje i logovanje korisnika.
+Nakon uspesnog logovanja korisnik pristupa aplikaciji.
+U donjem desnom uglu postoji ikonica za dodavanje novog kontakta.
+Pri samom kreiranju unose se osnvovni podaci kao ime,prezime,telefon i email.
+Takodje korisnik moze da izabere da kontakt sacuva kao omiljeni i ima laksi pristup istom na tabu "Favorites".
+
+Uvid u sve kontakte koje je kreirao korisnik na stranici "Contacts".
+Ta stranica ima dva taba "All contacts" i "Favorites".
+Navigacija izmedju ova dva taba se vrsi uz pomoc tab bar-a na samom dnu ekrana.
+Tadoje tu su opcije za filtriranje i sortiranje kontakata.
+Filtracija moze da se vrsi uz pomoc tekstualnog polja-Search.
+Sortiranje se vrsi uz pomoc sort by opcije gde biramo nacin odnosno atribut po kome se korisnici sortiraju.
+Opcije filtracije i sortiranja su naravno dostupne na oba taba.
+
+Dalje,
+
+omoguceno je takodje brisanje kontakata na stranici "Contacts".
+To se radi tako sto uz pomoc ikonice tri tacke otvorimo mali prozorcic i odabirom opcije "Delete" se kontakt brise.
+Pre samog brisanja korisnik mora da potvrdi da sigurno zeli da obrise kontatk.
+
+Na malom prozorcicu za konkretan kontakt mozemo da izaberemo da ga izmenimo.
+To se radi tako sto se izabere opcija "Edit" koja ce nas preusmjeriti na stranicu "Update contact".
+Ta stranica ce formu koja ce vec biti popunjena sa podacima kontakta koji se izmenjuje.
+Pre nego sto se omoguci izmena podataka korisnik u gornjem desnom uglu mora da omoguci izmene.
+"Save" dugme je dostupno samo ako je forma popunjena sa odgovarajucim podacima.
+Naravno tu je uvek "Cancel" opcija koja ce nas vratiti na prethodnu stranicu i zanemariti sve promene koje smo napravili nad kontaktom.
+
+
+
+
+
+KONKRETNIJI OPIS KODA:
+
+Icicemo redom od od stranice do stranice, od servisa do servisa i od modela do modela.
+
+Najpre cemo preci modele koje koristimo:
+To su Contact i User.
+
+
+Sto se tice User-a,za njega se pamti: id kao i drugi podaci vazni za njegovu autentifikovanost:
+token-koji ce da se koristi za slanje zahteva na firebase-u
+email-koji se koristi za logovanje
+tokenExpirationDate-do kada token korisnika vazi
+Za User-a imamo i funkciju getToken koja ce da vrati token korisnika.
+
+Model Contact-a ima sledece atribute:
+id-jedinstveni identifikator kontakta
+name-ime kontakta
+surnam-prezime kontakta
+phone-telefon kontakta
+email-email kontakta
+favorite-boolean vrijednost koja odreduje je li kontakt omiljen
+userId-id korisnika koji je kreirao kontakt
+
+Dva serivsa koja se koriste su contact i auth servisi
+
+Contact servis:
+To je servis namenjen za rad sa kontaktima.
+On sadrzi lokalnu kopiju liste svih kontakata trenutno ulogovanog korisnika
+Funkcije kontakt servisa su :
+loadContactsFromFirebase-To je funkcija koja na osvnou Observablea token  ulogovanohg korisnika i njegovog id salje
+    http zahtev na firebase-u i dohvaća sve kontakte koji su vezani za ulogovanog korisnika.
+    Ona se poziva u ngOnInit funkciji kontakt stranice kako bi pri svakom pristupu ovoj stranici mi posedovali azuriranu listu kontakata
+getContacts-funckija koja ce drugim stranicam omoguciti da se pretplate na listu korisnika i da uvek sadrze "najsvezije" podatke o istoj
+getContact-koja uz pomoc id kontakta pronali kontakt i vraca ga
+addContactFirebase-funkcija koja salje http zahtev na firebase i u RealTimeDatabase dodaje novog korisnika
+getFirebaseIdByContactId-ovo je funkcija koja mi pomaze da lako dodjem do firebase id-a kontakta
+updateContactFirebase-kontakt koji je izmenjen na stranici "Update contact" se salje na firebase i u RealTimeDatabase se azurira kontakt
+deleteContactFirebase-kontakt koji je izbrisan na stranici "Contacts" se salje na firebase i u RealTimeDatabase se brise kontakt
+Dakle contact servis je osnovni servis koji se koristi za rad sa kontaktima.
+
+Auth servis:
+To je servis namenjen za rad sa autentifikacijom i autorizacijom korisnika.
+On sadrzi funkcije za logovanje i registraciju korisnika.
+Zaduzen je za token korisnika kao i za logout funckiju.
+
+
+Sada bih krenuo sa stranicama:
+
+Login stranica:
+    Na njoj se prikazuje forma u koju se unose email i sifra.
+    Klikom na dugme login se poziva login funkcija koja preko auth servisa a on preko http zahteva
+    salje zahtev za loginom prema firebase-u.
+    Ako je login uspesan,token korisnika se cuva u local storage i korisnik se preusmjeruje na stranicu "Contacts".
+
+Register stranica:
+    Na njoj se prikazuje forma u koju se unose email i sifra ali takodje i osnovni podaci o korisniku:name i surname.
+    Klikom na dugme register se poziva register funkcija koja preko auth servisa a on preko http zahteva
+    salje zahtev za registracijom prema firebase-u.
+    Ako je registracija uspesna,korisnika biva preusmeren na login stranicu
+
+Contacts stranica:
+    Vec sam naveo osnovne funkcionalnosti i nacin koriscenja ove stranice
+    Neke stvari koje bih izdvojio su:
+        Delete contact funkcija koja se poziva direktno na ovoj stranici preko contact servisa a on preko http zahteva salje
+        http zahtev na firebase za brisanje kontakta, ovde do znacaja dolazi getFirebaseIdByContactId funckija koju
+        sam iskoristio da bih tacno znao koji je to kontakt na firebasu potrebno izbrisati
+        U gornjem levog uglu se nalazi ikonica koja kada se pritisne preko auth servisa vrsi logout korisnika
+    Sve ostalo na ovoj stranici je pozivanje drugih stranica koje su opisane u opisu projekta.
+
+Contact-Detail stranica:(stranica za dodavanje kontakata-greska pri davanju naziva)
+    Na ovoj stranici se nalazi forma koja se popunjava sa podacima o kontaktu.
+    Postoje razlictii validatori koji su zaduzeni za to da uneti podaci budu ispravni.
+    Klikom na dugme save se poziva funkcija koja salje podatke na firebase i u RealTimeDatabase se dodaje novi kontakt.
+    Ako je dodavanje uspesno,korisnik se preusmjeruje na stranicu "Contacts", gde odmah moze da vidi
+    updateovanu listu
+
+Update-Contact stranica:
+    Stranica koja se koristi za izmenu kontakata.
+    Na ovoj stranici se nalazi forma koja se popunjava sa podacima o kontaktu koji se izmenjuje.
+    Postoje razlictii validatori koji su zaduzeni za to da uneti podaci budu ispravni.
+    Klikom na dugme save se poziva funkcija koja salje podatke na firebase i u RealTimeDatabase se azurira kontakt.
+    Ako je izmena uspesna,korisnik se preusmjeruje na stranicu "Contacts", gde odmah moze da vidi
+    updateovanu listu
+
+
+Auth Guradovi:
+    Postavljeni su kako bi onemogucili pristup drugim stranicama neulogovanim korisnicima
+    Postavljanje guardova se nakon njihovog definisanja vrsi u app-routing.module.ts fajlu
+    Sam gard je zaduzen da preko auth servisa proveri da li korisnik poseduje token
+    i ukoliko poseduje taj korisnik se smatra ulogovanim i dozvoljeno mu je da pristupa ostalim stranicama
+    a ukoliko ne poseduje taj korisnik se preusmjeruje na login stranicu
