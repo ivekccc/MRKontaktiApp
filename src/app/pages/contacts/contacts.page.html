@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="light">
     <ion-title>Contacts</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
@@ -8,10 +8,10 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search" (ionInput)="filterContacts()"></ion-searchbar>
+    <ion-searchbar class="custom-searchbar" [(ngModel)]="searchTerm" placeholder="Search" (ionInput)="filterContacts()"></ion-searchbar>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-select placeholder="Sort by" (ionChange)="sortContacts($event.detail.value)">
+    <ion-select color="success" class="custom-select" placeholder="Sort by" (ionChange)="sortContacts($event.detail.value)">
       <ion-select-option value="name">Name</ion-select-option>
       <ion-select-option value="phone">Phone</ion-select-option>
       <ion-select-option value="email">Email</ion-select-option>
@@ -21,29 +21,30 @@
 
 <ion-content >
 
-  <ion-list *ngIf="selectedTab === 'all'">
+  <ion-list color="success" *ngIf="selectedTab === 'all'">
     <ion-item *ngFor="let contact of filteredContacts" >
       <ion-label>{{ contact.name }} {{contact.surname}}</ion-label>
       <ion-icon name="ellipsis-vertical-outline" (click)="presentPopover($event,contact)"></ion-icon>
     </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="selectedTab === 'favorites'">
-    <ion-item *ngFor="let contact of favoriteContacts">
+  <ion-list color="success" *ngIf="selectedTab === 'favorites'">
+    <ion-item *ngFor="let contact of favoriteContacts" class="contact-item">
+
       <ion-label>{{ contact.name }} {{contact.surname}}</ion-label>
-      <ion-icon name="ellipsis-vertical-outline" (click)="presentPopover($event,contact)" ></ion-icon>
+      <ion-icon name="ellipsis-vertical-outline" (click)="presentPopover($event,contact)"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>
 <ion-footer>
   <ion-toolbar color="black">
     <ion-buttons slot="end">
-      <ion-button size="large" color="primary" routerLink="/contact-detail">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
+      <ion-button size="large" color="success" fill="solid" shape="round" routerLink="/contact-detail" class="round-button">
+        <ion-icon slot="icon-only" name="person-add-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-segment [(ngModel)]="selectedTab" class="segment-bottom">
+  <ion-segment [(ngModel)]="selectedTab" class="segment-bottom" color="success">
     <ion-segment-button value="all">
       <ion-label>All</ion-label>
     </ion-segment-button>
