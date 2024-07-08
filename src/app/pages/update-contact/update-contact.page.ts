@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContactService } from 'src/app/services/contact.service';
 import { Contact } from 'src/app/contact.model';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-update-contact',
@@ -21,31 +21,62 @@ export class UpdateContactPage implements OnInit {
   };
   disabled: boolean = true;
 
-  changeDisabled(){
-    this.disabled = !this.disabled;
+  contactForm: FormGroup;
+
+  constructor(
+    private router: Router,
+    private contactService: ContactService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) {
+    this.contactForm = this.fb.group({
+      name: [{ value: '', disabled: this.disabled }, [Validators.required, Validators.minLength(3)]],
+      surname: [{ value: '', disabled: this.disabled }, [Validators.required, Validators.minLength(3)]],
+      phone: [{ value: '', disabled: this.disabled }, [Validators.required, Validators.minLength(10)]],
+      email: [{ value: '', disabled: this.disabled }, [Validators.required, Validators.email]],
+      favorites: [{ value: false, disabled: this.disabled }]
+    });
   }
-  constructor(private router: Router,private contactService: ContactService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
     const contact = this.contactService.getContact(id);
     if (contact) {
       this.contact = contact;
+      this.contactForm.patchValue(contact);
+      this.setFormState();
     } else {
       console.error('Contact not found');
     }
   }
 
-  saveContact() {
-    if (this.contact) {
-      this.contactService.updateContactFirebase(this.contact);
-      this.router.navigate(['/contacts']);
+  changeDisabled() {
+    this.disabled = !this.disabled;
+    this.setFormState();
+  }
+
+  setFormState() {
+    if (this.disabled) {
+      this.contactForm.disable();
     } else {
-      console.error('Contact is undefined');
+      this.contactForm.enable();
     }
   }
-  cancelAdd(){
 
+  saveContact() {
+    if (this.contactForm.valid) {
+      const updatedContact: Contact = {
+        ...this.contact,
+        ...this.contactForm.value
+      };
+      this.contactService.updateContactFirebase(updatedContact);
+      this.router.navigate(['/contacts']);
+    } else {
+      console.error('Form is invalid');
+    }
+  }
+
+  cancelAdd() {
     this.router.navigate(['/contacts']);
   }
 
@@ -53,9 +84,7 @@ export class UpdateContactPage implements OnInit {
     {
       text: "Keep",
       role: 'cancel',
-      handler: () => {
-
-      },
+      handler: () => { },
     },
     {
       text: 'OK',
@@ -65,5 +94,4 @@ export class UpdateContactPage implements OnInit {
       },
     },
   ];
-
 }
