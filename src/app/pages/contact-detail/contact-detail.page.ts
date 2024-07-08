@@ -22,6 +22,10 @@ export class ContactDetailPage implements OnInit {
     userId: ''
   };
 
+  cancelAdd(){
+    this.contactForm.reset();
+    this.router.navigate(['/contacts']);
+  }
 
   contactForm: FormGroup= this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],

@@ -30,7 +30,6 @@
 
   <ion-list color="success" *ngIf="selectedTab === 'favorites'">
     <ion-item *ngFor="let contact of favoriteContacts" class="contact-item">
-
       <ion-label>{{ contact.name }} {{contact.surname}}</ion-label>
       <ion-icon name="ellipsis-vertical-outline" (click)="presentPopover($event,contact)"></ion-icon>
     </ion-item>
