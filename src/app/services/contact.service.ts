@@ -51,7 +51,7 @@ export class ContactService {
         );
       })
     ).subscribe((res) => {
-      console.log('Firebase response:', res); // Log the response
+      console.log('Firebase response:', res);
       if (res) {
         this.contacts = Object.keys(res).map((key) => {
           const contact = res[key];
@@ -65,7 +65,7 @@ export class ContactService {
             contact.userId
           );
         });
-        this.contactsSubject.next(this.contacts); // Update the BehaviorSubject
+        this.contactsSubject.next(this.contacts);
       }
     });
   }

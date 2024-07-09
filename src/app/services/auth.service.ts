@@ -7,6 +7,9 @@ import { BehaviorSubject } from 'rxjs';
 import { User } from '../user.model';
 import { tap } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
+import { Database,ref,push } from '@angular/fire/database';
+
 
 
 
@@ -34,7 +37,7 @@ export class AuthService {
   private isAuthenticated = false;
   private _user = new BehaviorSubject<User | null>(null); // Promenjen tip na 'User | null'
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, private db: Database) {
 
     const isAuthenticated = localStorage.getItem('isAuthenticated');
     this.isAuthenticated = isAuthenticated === 'true';
@@ -86,16 +89,54 @@ export class AuthService {
     );
   }
 
-  register(userData: UserData){
+  register(userData: UserData) {
     this.isAuthenticated = true;
-    return this.http.post<AuthResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebase.apiKey}`,
-      {email:userData.email, password:userData.password,returnSecureToken:true}
-    ).pipe(tap((userData)=>{
-      const exparationTime=new Date(new Date().getTime()+(+userData.expiresIn * 1000));
-      const user=new User(userData.localId,userData.email,userData.idToken,exparationTime);
-      this._user.next(user);
-    }));
+    return this.http.post<AuthResponse>(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebase.apiKey}`,
+      {
+        email: userData.email,
+        password: userData.password,
+        returnSecureToken: true
+      }
+    ).pipe(
+      tap((authResponse) => {
+        const expirationTime = new Date(new Date().getTime() + (+authResponse.expiresIn * 1000));
+        const user = new User(authResponse.localId, authResponse.email, authResponse.idToken, expirationTime);
+        this._user.next(user);
+        const usersRef = ref(this.db, 'users');
+        const newUserRef = push(usersRef);
+        const newUserId = newUserRef.key;
+        if (!newUserId) {
+          throw new Error('Failed to generate a new user ID');
+        }
+
+        const newUser = {
+          id: newUserId,
+          email: userData.email,
+          name: userData.name,
+          surname: userData.surname,
+        };
+
+        this.token.pipe(
+          take(1),
+          switchMap((token) => {
+            return this.http.put(
+              `https://mrkontakti-default-rtdb.europe-west1.firebasedatabase.app/users/${newUserId}.json?auth=${token}`,
+              newUser
+            );
+          })
+        ).subscribe({
+          next: () => {
+            console.log('User added to database:', newUser);
+          },
+          error: (error) => {
+            console.error('Failed to add user to database:', error);
+          }
+        });
+      })
+    );
   }
+
 
   async logout() {
     this._user.next(null);
@@ -108,8 +149,6 @@ export class AuthService {
   }
 
   autoLogin() {
-    // Postavite potrebne podatke za automatsku prijavu korisnika
     localStorage.setItem('isAuthenticated', 'true');
-    // ... ostali potrebni podaci ...
   }
 }
