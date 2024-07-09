@@ -2,6 +2,10 @@ ANGULAR-IONIC PROJEKAT "KONTAKTI"
 
 OPSTE
 
+Korisnici:
+nemanja@gmail.com    Nemanja5
+ivan@gmail.com   IvanIvan5
+
 Ovo je aplikacija koja omogućuje kreiranje, pregled, izmena i brisanje kontakata.
 Tehnologija koja se koristi u aplikaciji je Angular i Ionic.
 Kao tehnologiju za bazu podataka koristi Firebase.
