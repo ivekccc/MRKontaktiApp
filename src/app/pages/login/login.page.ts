@@ -36,11 +36,7 @@ export class LoginPage implements OnInit {
           console.log(errRes);
           this.isLoading = false;
           let message = "Incorrect email or password";
-
-          // Extract the error message from the response
           const errorMessage = errRes.error?.error?.message;
-
-          // Map the Firebase error messages to user-friendly messages
           switch (errorMessage) {
             case 'EMAIL_NOT_FOUND':
               message = 'User not found';

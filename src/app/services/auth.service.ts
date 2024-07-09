@@ -35,7 +35,7 @@ interface UserData{
 })
 export class AuthService {
   private isAuthenticated = false;
-  private _user = new BehaviorSubject<User | null>(null); // Promenjen tip na 'User | null'
+  private _user = new BehaviorSubject<User | null>(null);
 
   constructor(private router: Router, private http: HttpClient, private db: Database) {
 

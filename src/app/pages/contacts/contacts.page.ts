@@ -25,8 +25,7 @@ export class ContactsPage implements OnInit {
   searchTerm: string = '';
   selectedTab= 'all';
   showSortOptions = false;
-  selectedContact: Contact | null = null; // Added property
-  private contactsSubscription: Subscription = new Subscription(); // Initialize the subscription
+  private contactsSubscription: Subscription = new Subscription();
 
   toggleSortOptions() {
     this.showSortOptions = !this.showSortOptions;
@@ -45,7 +44,7 @@ export class ContactsPage implements OnInit {
 
 
   ngOnInit() {
-    this.contactService.loadContactsFromFirebase(); // Added from duplicate ngOnInit method
+    this.contactService.loadContactsFromFirebase();
     this.contactsSubscription = this.contactService.getContacts().subscribe(contacts => {
       this.contacts = contacts;
       this.filteredContacts = this.contacts;
@@ -77,7 +76,6 @@ export class ContactsPage implements OnInit {
   }
   logout() {
     this.authService.logout();
-    /*Privremeno resenje za testiranje logout funkcionalnosti*/
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('token');
     this.router.navigate(['/login']);

@@ -1,24 +1,24 @@
 ion-content {
-  --ion-background-color: transparent; // Postavlja pozadinu na providnu da bi se video gradijent
-  background: #a8ff78; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #a8ff78, #78ffd6); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #a8ff78, #78ffd6); // Primer gradijenta od narandžaste do svetlo narandžaste
+  --ion-background-color: transparent;
+  background: #a8ff78;
+  background: -webkit-linear-gradient(to right, #a8ff78, #78ffd6);
+  background: linear-gradient(to right, #a8ff78, #78ffd6);
 }
 
 .login-card-container {
   display: flex;
   justify-content: center;
   align-items: center;
-   // Osigurava da kartica bude centrirana vertikalno
+
 }
 
 .login-card {
   width: 100%;
-    max-width: 400px; // Ograničava maksimalnu širinu kartice
+    max-width: 400px;
     padding: 20px;
     margin-top: 15%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Dodaje blagi senku za bolji izgled
-    border-radius: 20px; // Zaobljeni uglovi kartice
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 }
 
 ion-card-header {

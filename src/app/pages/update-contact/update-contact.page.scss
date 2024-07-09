@@ -10,15 +10,14 @@ ion-toolbar{
     display: flex;
     justify-content: center;
     align-items: center;
-     // Osigurava da kartica bude centrirana vertikalno
   }
   .contact-card {
     width: 100%;
-    max-width: 400px; // Ograničava maksimalnu širinu kartice
+    max-width: 400px;
     padding: 20px;
     margin-top: 15%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Dodaje blagi senku za bolji izgled
-    border-radius: 20px; // Zaobljeni uglovi kartice
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 
   }
   .contact-buttons{
